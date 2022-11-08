@@ -21,7 +21,7 @@ export class Modal extends React.Component {
 
   render() {
     return createPortal(
-      <SC.Overlay>
+      <SC.Overlay onClick={this.props.onClose}>
         <SC.Modal>{this.props.children}</SC.Modal>
       </SC.Overlay>,
       modalRoot
