@@ -1,19 +1,30 @@
+import React from 'react';
 import * as SC from './Modal.styled';
+import { createPortal } from 'react-dom';
 
-export const Modal = () => {
-  return (
-    <SC.Overlay>
-      <SC.Modal>
-        <img src="" alt="" />
-      </SC.Modal>
-    </SC.Overlay>
-  );
-};
+const modalRoot = document.querySelector('#modal-root');
 
-// import * as basicLightbox from 'basiclightbox';
+export class Modal extends React.Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.onKeyDown);
+  }
 
-// const instance = basicLightbox.create(`
-//     <img src="assets/images/image.png" width="800" height="600">
-// `);
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKeyDown);
+  }
 
-// instance.show();
+  onKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose();
+    }
+  };
+
+  render() {
+    return createPortal(
+      <SC.Overlay>
+        <SC.Modal>{this.props.children}</SC.Modal>
+      </SC.Overlay>,
+      modalRoot
+    );
+  }
+}

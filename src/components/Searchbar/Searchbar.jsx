@@ -1,4 +1,5 @@
 import * as SC from './Searchbar.styled';
+import PropTypes from 'prop-types';
 
 export const Searchbar = ({ onSubmit }) => {
   return (
@@ -16,4 +17,8 @@ export const Searchbar = ({ onSubmit }) => {
       </SC.SearchForm>
     </SC.Searchbar>
   );
+};
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
