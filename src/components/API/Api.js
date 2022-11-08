@@ -17,5 +17,3 @@ fetchImages.propTypes = {
   query: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
-
-export default { fetchImages };

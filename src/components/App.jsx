@@ -2,7 +2,7 @@ import React from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
-import api from './API/Api';
+import { fetchImages } from './API/Api';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import * as SC from './App.styled';
@@ -27,7 +27,6 @@ export class App extends React.Component {
     });
 
     form.reset();
-    // this.apiSearch(query, startPage);
   };
 
   onImgClick = evt => {
@@ -57,7 +56,7 @@ export class App extends React.Component {
     }
     this.setState({ isLoading: true });
     try {
-      const results = await api.fetchImages(
+      const results = await fetchImages(
         this.state.searchValue,
         this.state.page
       );
