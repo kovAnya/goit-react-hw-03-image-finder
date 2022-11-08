@@ -13,9 +13,9 @@ export const fetchImages = async (query, page) => {
   return responce.data;
 };
 
-export default { fetchImages };
-
 fetchImages.propTypes = {
   query: PropTypes.string.isRequired,
   page: PropTypes.number.isRequired,
 };
+
+export default { fetchImages };
