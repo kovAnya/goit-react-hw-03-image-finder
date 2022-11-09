@@ -24,6 +24,7 @@ export class App extends React.Component {
     this.setState({
       searchValue: query,
       page: 1,
+      images: [],
     });
 
     form.reset();
@@ -42,7 +43,6 @@ export class App extends React.Component {
     this.setState(prevState => {
       return {
         page: prevState.page + 1,
-        pagesLoadMore: prevState.pagesLoadMore - 1,
       };
     });
   };
@@ -60,14 +60,12 @@ export class App extends React.Component {
         this.state.searchValue,
         this.state.page
       );
-      if (this.state.page === 1) {
-        const pages = Math.floor(results.totalHits / 12 - 1);
-        this.setState({ images: [...results.hits], pagesLoadMore: pages });
-      } else {
-        this.setState({
-          images: [...prevState.images, ...results.hits],
-        });
-      }
+
+      const pages = Math.ceil(results.totalHits / 12);
+      this.setState({
+        images: [...this.state.images, ...results.hits],
+        pagesLoadMore: pages,
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -81,7 +79,9 @@ export class App extends React.Component {
         <Searchbar onSubmit={this.onSubmit} />
         {this.state.isLoading && <Loader />}
         <ImageGallery images={this.state.images} onImgClick={this.onImgClick} />
-        {this.state.pagesLoadMore > 0 && <Button onClick={this.loadmore} />}
+        {this.state.page < this.state.pagesLoadMore && (
+          <Button onClick={this.loadmore} />
+        )}
         {this.state.largeImgUrl.length > 0 && (
           <Modal onClose={this.onCloseModal}>
             <img src={this.state.largeImgUrl} alt="" />
